@@ -7,16 +7,25 @@ from .oauth import OAuthSignIn
 
 
 @app.route('/')
-# @app.route('/index')
-# @login_required
+@app.route('/index')
+@login_required
 def index():
     return render_template('index.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if g.user is not None and g.user.is_authenticated:
+        return redirect(url_for('index'))
+    return render_template('login.html',
+                           title='Sign In'
+                           )
 
 
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 
 @app.route('/authorize/<provider>')
