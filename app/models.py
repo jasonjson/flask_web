@@ -7,7 +7,7 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     social_id = db.Column(db.String(64), nullable=False, unique=True)
-    nickname = db.Column(db.String(64), nullable=False)
+    nickname = db.Column(db.String(64), nullable=False, unique=True)
     email = db.Column(db.String(64), nullable=True)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
@@ -22,6 +22,18 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User %r>' % (self.nickname)
+
+    @staticmethod
+    def make_unique_nickname(nickname):
+        if User.query.filter_by(nickname=nickname).first() is None:
+            return nickname
+        version = 2
+        while True:
+            nickname = nickname + str(version)
+            if User.query.filter_by(nickname=nickname).first() is None:
+                break
+            version += 1
+        return nickname
 
 
 class Post(db.Model):

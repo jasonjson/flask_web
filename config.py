@@ -14,3 +14,12 @@ OAUTH_CREDENTIALS = {
         'secret': '52f80ebf78a4a34498bb7f392d4fb9a9'
     }
 }
+
+# administrator list
+ADMINS = ['jason.yyliu@gmail.com']
+
+# mail server settings
+MAIL_SERVER = 'localhost'
+MAIL_PORT = 25
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
