@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from config import basedir, ADMINS, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD
+from config import basedir, ADMINS, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, DEBUG
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -10,7 +10,7 @@ lm = LoginManager()
 lm.init_app(app)
 lm.login_view = 'login'
 
-if not app.debug:
+if DEBUG:
     import logging
     # send emails to admin when an error occurred
     from logging.handlers import SMTPHandler
